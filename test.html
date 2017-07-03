@@ -1,0 +1,32 @@
+<html>
+
+<head>
+  <script src="bower_components/plotly.js/dist/plotly.js" charset="UTF-8"></script>
+</head>
+
+<body>
+  <div id="plot"></div>
+  <script>
+    window.addEventListener('load', function () {
+        var trace1 = {
+          x: ['Feature A', 'Feature B', 'Feature C', 'Feature D', 'Feature E'],
+          y: [20, 14, 23, 25, 22],
+          marker:{
+            color: ['rgba(204,204,204,1)', 'rgba(222,45,38,0.8)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)']
+          },
+          type: 'bar'
+        };
+
+        var data = [trace1];
+
+        var layout = {
+          title: 'Least Used Feature'
+        };
+
+        var plot = document.getElementById('plot');
+        Plotly.newPlot(plot, data, layout);
+    });
+  </script>
+</body>
+
+</html>
