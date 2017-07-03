@@ -8,7 +8,7 @@ the appropriate styles plotly works fine.
 
 # Styles to add
 
-The following styles must be add:
+The following styles must be added:
 
     .js-plotly-plot .plotly, .js-plotly-plot .plotly div {
         font-family:'Open Sans', verdana, arial, sans-serif;
