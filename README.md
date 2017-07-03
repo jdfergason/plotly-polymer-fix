@@ -1,108 +1,299 @@
-# Polymer App Toolbox - Starter Kit
+# Introduction
 
-[![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
+This repository demonstrates how to use Plotly.js with Polymer.
 
-This template is a starting point for building apps using a drawer-based
-layout. The layout is provided by `app-layout` elements.
+Out of the box plotly does not work with the shadow dom.  This is due
+to the way it adds styles to the main document.  If each template includes
+the appropriate styles plotly works fine.
 
-This template, along with the `polymer-cli` toolchain, also demonstrates use
-of the "PRPL pattern" This pattern allows fast first delivery and interaction with
-the content at the initial route requested by the user, along with fast subsequent
-navigation by pre-caching the remaining components required by the app and
-progressively loading them on-demand as the user navigates through the app.
+# Styles to add
 
-The PRPL pattern, in a nutshell:
+The following styles must be add:
 
-* **Push** components required for the initial route
-* **Render** initial route ASAP
-* **Pre-cache** components for remaining routes
-* **Lazy-load** and progressively upgrade next routes on-demand
+    .js-plotly-plot .plotly, .js-plotly-plot .plotly div {
+        font-family:'Open Sans', verdana, arial, sans-serif;
+        margin:0;
+        padding:0;
+    }
 
-### Migrating from Polymer Starter Kit v1?
+    .js-plotly-plot .plotly input, .js-plotly-plot .plotly button {
+        font-family:'Open Sans', verdana, arial, sans-serif;
+    }
 
-[Check out our blog post that covers what's changed in PSK2 and how to migrate!](https://www.polymer-project.org/1.0/blog/2016-08-18-polymer-starter-kit-or-polymer-cli.html)
+    .js-plotly-plot .plotly input:focus,.js-plotly-plot .plotly button:focus {
+        outline:none;
+    }
 
-### Quickstart
+    .js-plotly-plot .plotly a {
+        text-decoration:none;
+    }
 
-We've recorded a Polycast to get you up and running with PSK2 fast!
+    .js-plotly-plot .plotly a:hover {
+        text-decoration:none;
+    }
 
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=HgJ0XCyBwzY&list=PLNYkxOF6rcIDdS7HWIC_BYRunV6MHs5xo&index=10">
-    <img src="https://img.youtube.com/vi/HgJ0XCyBwzY/0.jpg" alt="Polymer Starter Kit 2 video">
-  </a>
-</p>
+    .js-plotly-plot .plotly .crisp {
+        shape-rendering:crispEdges;
+    }
 
-### Setup
+    .js-plotly-plot .plotly .user-select-none {
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        -o-user-select:none;
+        user-select:none;
+    }
 
-##### Prerequisites
+    .js-plotly-plot .plotly svg {
+        overflow:hidden;
+    }
 
-First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
-[npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
+    .js-plotly-plot .plotly svg a {
+        fill:#447adb;
+    }
 
-    npm install -g polymer-cli
+    .js-plotly-plot .plotly svg a:hover {
+        fill:#3c6dc5;
+    }
 
-Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
+    .js-plotly-plot .plotly .main-svg {
+        position:absolute;
+        top:0;
+        left:0;
+        pointer-events:none;
+    }
 
-    npm install -g bower
+    .js-plotly-plot .plotly .main-svg .draglayer {
+        pointer-events:all;
+    }
 
-##### Initialize project from template
+    .js-plotly-plot .plotly .cursor-default {
+        cursor:default;
+    }
 
-    mkdir my-app
-    cd my-app
-    polymer init starter-kit
+    .js-plotly-plot .plotly .cursor-pointer {
+        cursor:pointer;
+    }
 
-### Start the development server
+    .js-plotly-plot .plotly .cursor-crosshair {
+        cursor:crosshair;
+    }
 
-This command serves the app at `http://localhost:8080` and provides basic URL
-routing for the app:
+    .js-plotly-plot .plotly .cursor-move {
+        cursor:move;
+    }
 
-    polymer serve --open
+    .js-plotly-plot .plotly .cursor-col-resize {
+        cursor:col-resize;
+    }
 
-### Build
+    .js-plotly-plot .plotly .cursor-row-resize {
+        cursor:row-resize;
+    }
 
-This command performs HTML, CSS, and JS minification on the application
-dependencies, and generates a service-worker.js file with code to pre-cache the
-dependencies based on the entrypoint and fragments specified in `polymer.json`.
-The minified files are output to the `build/unbundled` folder, and are suitable
-for serving from a HTTP/2+Push compatible server.
+    .js-plotly-plot .plotly .cursor-ns-resize {
+        cursor:ns-resize;
+    }
 
-In addition the command also creates a fallback `build/bundled` folder,
-generated using fragment bundling, suitable for serving from non
-H2/push-compatible servers or to clients that do not support H2/Push.
+    .js-plotly-plot .plotly .cursor-ew-resize {
+        cursor:ew-resize;
+    }
 
-    polymer build
+    .js-plotly-plot .plotly .cursor-sw-resize {
+        cursor:sw-resize;
+    }
 
-### Preview the build
+    .js-plotly-plot .plotly .cursor-s-resize {
+        cursor:s-resize;
+    }
 
-This command serves the minified version of the app at `http://localhost:8080`
-in an unbundled state, as it would be served by a push-compatible server:
+    .js-plotly-plot .plotly .cursor-se-resize {
+        cursor:se-resize;
+    }
 
-    polymer serve build/unbundled
+    .js-plotly-plot .plotly .cursor-w-resize {
+        cursor:w-resize;
+    }
 
-This command serves the minified version of the app at `http://localhost:8080`
-generated using fragment bundling:
+    .js-plotly-plot .plotly .cursor-e-resize {
+        cursor:e-resize;
+    }
 
-    polymer serve build/bundled
+    .js-plotly-plot .plotly .cursor-nw-resize {
+        cursor:nw-resize;
+    }
 
-### Run tests
+    .js-plotly-plot .plotly .cursor-n-resize {
+        cursor:n-resize;
+    }
 
-This command will run [Web Component Tester](https://github.com/Polymer/web-component-tester)
-against the browsers currently installed on your machine:
+    .js-plotly-plot .plotly .cursor-ne-resize {
+        cursor:ne-resize;
+    }
 
-    polymer test
+    .js-plotly-plot .plotly .modebar {
+        position:absolute;
+        top:2px;
+        right:2px;
+        z-index:1001;
+        background:rgba(255,255,255,0.7);
+    }
 
-If running Windows you will need to set the following environment variables:
+    .js-plotly-plot .plotly .modebar--hover {
+        opacity:0;
+        -webkit-transition:opacity 0.3s ease 0s;
+        -moz-transition:opacity 0.3s ease 0s;
+        -ms-transition:opacity 0.3s ease 0s;
+        -o-transition:opacity 0.3s ease 0s;
+        transition:opacity 0.3s ease 0s;
+    }
 
-- LAUNCHPAD_BROWSERS
-- LAUNCHPAD_CHROME
+    .js-plotly-plot .plotly:hover .modebar--hover {
+        opacity:1;
+    }
 
-Read More here [daffl/launchpad](https://github.com/daffl/launchpad#environment-variables-impacting-local-browsers-detection)
+    .js-plotly-plot .plotly .modebar-group {
+        float:left;
+        display:inline-block;
+        box-sizing:border-box;
+        margin-left:8px;
+        position:relative;
+        vertical-align:middle;
+        white-space:nowrap;
+    }
 
-### Adding a new view
+    .js-plotly-plot .plotly .modebar-group:first-child {
+        margin-left:0px;
+    }
 
-You can extend the app by adding more views that will be demand-loaded
-e.g. based on the route, or to progressively render non-critical sections of the
-application. Each new demand-loaded fragment should be added to the list of
-`fragments` in the included `polymer.json` file. This will ensure those
-components and their dependencies are added to the list of pre-cached components
-and will be included in the `bundled` build.
+    .js-plotly-plot .plotly .modebar-btn {
+        position:relative;
+        font-size:16px;
+        padding:3px 4px;
+        cursor:pointer;
+        line-height:normal;
+        box-sizing:border-box;
+    }
+
+    .js-plotly-plot .plotly .modebar-btn svg {
+        position:relative;
+        top:2px;
+    }
+
+    .js-plotly-plot .plotly .modebar-btn path {
+        fill:rgba(0,31,95,0.3);
+    }
+
+    .js-plotly-plot .plotly .modebar-btn.active path,.js-plotly-plot .plotly .modebar-btn:hover path {
+        fill:rgba(0,22,72,0.5);
+    }
+
+    .js-plotly-plot .plotly .modebar-btn.modebar-btn--logo {
+        padding:3px 1px;
+    }
+
+    .js-plotly-plot .plotly .modebar-btn.modebar-btn--logo path {
+        fill:#447adb !important;
+    }
+
+    .js-plotly-plot .plotly [data-title]:before,.js-plotly-plot .plotly [data-title]:after {
+        position:absolute;
+        -webkit-transform:translate3d(0, 0, 0);
+        -moz-transform:translate3d(0, 0, 0);
+        -ms-transform:translate3d(0, 0, 0);
+        -o-transform:translate3d(0, 0, 0);
+        transform:translate3d(0, 0, 0);
+        display:none;
+        opacity:0;
+        z-index:1001;
+        pointer-events:none;
+        top:110%;
+        right:50%;
+    }
+
+    .js-plotly-plot .plotly [data-title]:hover:before,.js-plotly-plot .plotly [data-title]:hover:after {
+        display:block;
+        opacity:1;
+    }
+
+    .js-plotly-plot .plotly [data-title]:before {
+        content:'';
+        position:absolute;
+        background:transparent;
+        border:6px solid transparent;
+        z-index:1002;
+        margin-top:-12px;
+        border-bottom-color:#69738a;
+        margin-right:-6px;
+    }
+
+    .js-plotly-plot .plotly [data-title]:after {
+        content:attr(data-title);
+        background:#69738a;
+        color:white;
+        padding:8px 10px;
+        font-size:12px;
+        line-height:12px;
+        white-space:nowrap;
+        margin-right:-18px;
+        border-radius:2px;
+    }
+
+    .js-plotly-plot .plotly .select-outline {
+        fill:none;
+        stroke-width:1;
+        shape-rendering:crispEdges;
+    }
+
+    .js-plotly-plot .plotly .select-outline-1 {
+        stroke:white;
+    }
+
+    .js-plotly-plot .plotly .select-outline-2 {
+        stroke:black;
+        stroke-dasharray:2px 2px;
+    }
+
+    .plotly-notifier {
+        font-family:'Open Sans';
+        position:fixed;
+        top:50px;
+        right:20px;
+        z-index:10000;
+        font-size:10pt;
+        max-width:180px;
+    }
+
+    .plotly-notifier p {
+        margin:0;
+    }
+
+    .plotly-notifier .notifier-note {
+        min-width:180px;
+        max-width:250px;
+        border:1px solid #fff;
+        z-index:3000;
+        margin:0;
+        background-color:#8c97af;
+        background-color:rgba(140,151,175,0.9);
+        color:#fff;
+        padding:10px;
+    }
+
+    .plotly-notifier .notifier-close {
+        color:#fff;
+        opacity:0.8;
+        float:right;
+        padding:0 5px;
+        background:none;
+        border:none;
+        font-size:20px;
+        font-weight:bold;
+        line-height:20px;
+    }
+
+    .plotly-notifier .notifier-close:hover {
+        color:#444;
+        text-decoration:none;
+        cursor:pointer;
+    }
