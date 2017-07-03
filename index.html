@@ -59,6 +59,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           navigator.serviceWorker.register(baseUrl + 'service-worker.js');
         });
       }
+
+      /* this script must run before Polymer is imported */
+      window.Polymer = {
+        rootPath: 'https://jdfergason.github.io/plotly-polymer-fix/'
+      };
     </script>
 
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
